@@ -1,30 +1,32 @@
-#include<cstdio>
-#include<cstring>
-#include<cmath>
-#include<algorithm>
-using namespace std;
-        const int maxn=100000+10;
-        char st[maxn];
-        int ans;
-        int dp[maxn];
-        int main()
-        {
-        scanf("%s",st+1);int len=strlen(st+1);
-        for(int i=1;i<=len;i++)
-        {
-        if(st[i]=='(' || st[i]=='[')continue;
-        if(st[i]==')' || st[i]==']')
-        {
-        if((st[i]==')' && st[i-1-dp[i-1]]=='(') || (st[i]==']' && st[i-1-dp[i-1]]=='['))
-        {
-        dp[i]=dp[i-1]+2+dp[i-2-dp[i-1]];
-        ans=max(ans,dp[i]);
+package interview;
+import java.util.*;
+
+public class Main1 {
+    public static void main(String[] args){
+        Scanner sc = new Scanner((System.in));
+        int count = Integer.parseInt(sc.nextLine());
+        while(count >0){
+            String[] nums = sc.nextLine().split(" ");
+            System.out.println(brokenCalc(Integer.parseInt(nums[0]), Integer.parseInt(nums[1])));
+            count--;
         }
+
+    }
+
+    public static int brokenCalc(int X, int Y) {
+        int ans = 0;
+        while (Y > X) {
+            if (Y==X) break;
+            if (Y/10<=0){
+                return -1;
+            }
+            if (Y % 2 == 1)
+                Y = (Y-1)/10;
+            else
+                Y /= 2;
+            ans++;
         }
-        }
-        for(int i=1;i<=len;i++)
-        if(dp[i]==ans)
-        {
-        for(int j=i-ans+1;j<=i;j++)printf("%c",st[j]); return 0;
-        }
-        }
+
+        return ans + X - Y;
+    }
+}
